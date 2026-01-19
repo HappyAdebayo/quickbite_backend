@@ -31,9 +31,11 @@ Route::prefix('admin')->group(function () {
         Route::post('/menus', [MenuController::class, 'store']);
         Route::put('/menus/{id}', [MenuController::class, 'update']);
         Route::delete('/menus/{id}', [MenuController::class, 'destroy']);
-        
+        Route::put('/menus/{id}/availability', [MenuController::class, 'toggleAvailability']);
+
         Route::get('/orders', [AdminOrderController::class, 'index']);
         Route::patch('/orders/{orderId}/status', [AdminOrderController::class, 'updateStatus']);
+        
         Route::get('/dashboard', [DashboardController::class, 'index']);
 
     });

@@ -35,6 +35,7 @@ class OrderController extends Controller
                 'message' => 'Order placed successfully',
                 'order_id' => $order->id,
                 'total_price' => $order->total_price,
+                'status' => $order->status,
                 'items' => $order->items,
             ], 201);
     }

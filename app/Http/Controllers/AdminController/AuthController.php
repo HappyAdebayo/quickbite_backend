@@ -49,7 +49,6 @@ class AuthController extends Controller
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
-        // Generate Sanctum token
         $token = $admin->createToken('admin-token')->plainTextToken;
 
         return response()->json([

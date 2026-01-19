@@ -11,8 +11,7 @@ class CategoryController extends Controller
 {
      public function index(Request $request)
     {
-        $admin = $request->user(); 
-        $categories = Category::where('admin_id', $admin->id)->get();
+        $categories = Category::all();
 
         return response()->json([
             'message' => 'Category fetched successfully',
@@ -30,10 +29,7 @@ class CategoryController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $admin = $request->user(); 
-
         $category = Category::create([
-            'admin_id' => $admin->id,
             'name' => $request->name,
         ]);
 

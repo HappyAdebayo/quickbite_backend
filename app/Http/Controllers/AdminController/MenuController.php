@@ -18,11 +18,11 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'name' => 'required|string|unique:menus,name',
             'description' => 'required|string',
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'required|image|max:2048', // validate image upload
+            'image' => 'required|image|max:2048', 
             'status' => 'required|in:available,unavailable',
         ]);
 
@@ -53,7 +53,7 @@ class MenuController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'name' => 'required|string|unique:menus,name,' . $id,
             'description' => 'required|string',
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
@@ -99,4 +99,17 @@ class MenuController extends Controller
 
         return response()->json(['message' => 'Menu deleted successfully']);
     }
+    public function toggleAvailability($id)
+    {
+        $menu = Menu::findOrFail($id);
+
+        $menu->status = $menu->status === 'available' ? 'unavailable' : 'available';
+        $menu->save();
+
+        return response()->json([
+            'message' => 'Menu status updated successfully',
+            'menu' => $menu
+        ]);
+    }
+
 }

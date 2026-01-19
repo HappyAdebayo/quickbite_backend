@@ -12,21 +12,38 @@ class CatalogController extends Controller
 {
        public function categories()
     {
-        $categories = Category::all();
+        $categoryNames = Category::pluck('name')->toArray();
+
+        array_unshift($categoryNames, 'All');
 
         return response()->json([
-            'message' => 'Category fetched successfully',
-            'categories' => $categories
+            'message' => 'Categories fetched successfully',
+            'categories' => $categoryNames
         ], 200);
     }
 
-       public function menus()
+
+      public function menus()
     {
-        $menu = Menu::where('status', 'available')->get();
+        $menus = Menu::with('category') 
+            ->where('status', 'available')
+            ->get()
+            ->map(function ($menu) {
+                return [
+                    'id' => $menu->id,
+                    'name' => $menu->name,
+                    'description' => $menu->description,
+                    'price' => $menu->price,
+                    'status' => $menu->status,
+                    'type' => $menu->category ? $menu->category->name : null,
+                    'image' => $menu->image,
+                ];
+            });
 
         return response()->json([
-            'message' => 'Menu fetched successfully',
-            'menu' => $menu
+            'message' => 'Menus fetched successfully',
+            'menus' => $menus
         ], 200);
     }
+
 }
