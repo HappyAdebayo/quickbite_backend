@@ -42,6 +42,7 @@ class OrderService
             ]);
 
             $order->items()->createMany($orderItems);
+\Log::info('Order items payload:', $orderItems);
 
             return $order->load('items'); 
         });

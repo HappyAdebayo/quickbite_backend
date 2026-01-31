@@ -99,6 +99,7 @@ class MenuController extends Controller
 
         return response()->json(['message' => 'Menu deleted successfully']);
     }
+    
     public function toggleAvailability($id)
     {
         $menu = Menu::findOrFail($id);

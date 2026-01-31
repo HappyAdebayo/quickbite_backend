@@ -45,4 +45,5 @@ Route::prefix('user')->group(function () {
     Route::get('/categories', [CatalogController::class, 'categories']);
     Route::get('/menus', [CatalogController::class, 'menus']);
     Route::post('/orders', [OrderController::class, 'placeOrder']);
+    Route::get('/orders/{orderId}', [OrderController::class, 'show']);
 });
